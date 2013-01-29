@@ -1,0 +1,421 @@
+<!doctype html>
+<!
+Project 4
+Edward M Murray Jr
+ASD 1301
+>  
+<html lang="en">
+<head>
+
+	<meta charset="utf-8">
+	
+	<title>The Recipe Vault</title>
+	
+	<!--  Mobile viewport optimized: j.mp/bplateviewport -->
+	<meta name="HandheldFriendly" content="True">
+	<meta name="MobileOptimized" content="320"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	
+	<!-- Mobile IE needs ClearType for smoothing fonts -->
+	<meta http-equiv="cleartype" content="on">
+	
+	<!-- StyleSheets under here -->
+	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.css" />
+	<link href="style.css" rel="stylesheet" />
+	
+	<!-- JavaScript is normally at the end of the body, except for Modernizr which enables HTML5 elements & feature detects -->
+	<script src="modernizr.custom.min.js"></script>
+
+</head>
+<body>
+
+	<!--Home Page-->
+	<div data-role="page" id="home" style="">
+	
+		<!--Page Header-->
+		<header data-role="header" data-theme="b" data-position="fixed">
+    		<h1>The Recipe Vault</h1>
+		</header>
+		
+		<section data-role="content">
+		
+			<!--Add item feature call to action-->
+	    	<div id="feature1">
+		    	<a href="#additem" Data-ajax="false" ><img id ="feature" img src="addrecipe.png" /></a>
+		    </div><br/>
+		    
+		    <!--Listview browse recipes-->
+		    <ul data-role="listview">  
+		    	<li data-role="list-divider">Browse Recipes</li>
+		    		<li><a href= "#category">
+			    		<h2>By Category</h2>
+			    		<p>Browse Recipes By Category</p>
+			    	</a></li>
+					<li><a href= "#error">
+						<h2>By Name</h2>
+						<p>Browse Recipes By Name</p>
+					</a></li>
+					<li><a href= "#recentlyadded">
+						<h2>Recently Added</h2>
+						<p>Browse Recently Added Recipes</p>
+					</a></li>		    
+		    </ul><br/>
+		    <ul>
+		    	<li><a href="#ajaxjson" data-role="button" id="jsonRec">View JSON Data</a></li>
+		    	<li><a href="#ajaxcsv" data-role="button" id="csvRec">View CSV Data</a></li>
+		    	<li><a href="#ajaxxml" data-role="button" id="xmlRec">View XML Data</a></li>
+		    	<li><a href="#dbdata" data-role="button" id="dbRec">View DataBase Recipes</a></li>
+		    </ul>
+		</section>
+			
+		<!--Footer Navigation Bar-->
+		<footer data-role="footer" data-position="fixed">
+			<div data-role="navbar">
+				<ul>
+					<li><a href="#home" data-icon="home">Home</a></li>
+					<li><a href="#error" data-icon="search">Find Recipes</a></li><!--Link to some type of API or feed in the future-->
+				</ul>
+			</div>
+		</footer>
+	</div>
+	
+	<!--Add Item Page(Form)-->
+	<div data-role="page" id="additem" data-add-back-btn="true">
+		<header data-role="header" data-theme="b">
+    		<h1>The Recipe Vault</h1>
+		</header>
+		
+			<nav>
+				<ul>
+					<li><a href="#" id ="displayLink">Display Recipes</a></li>
+					<li><a href="#" id ="clear">Clear Recipes</a></li>
+					<li><a href="#" id ="addNew" style= "display:none;">Add Another Recipe</a></li>
+				</ul>
+			</nav>
+		
+		<section data-role="content">
+		
+			<form action="" method="post" id="recipeform" data-ajax="false" >
+				<legend>Add your new recipe!</legend>
+				<p>*Fields are required</p>
+			
+				<div data-role="fieldcontain">
+					<label for="rname">*Recipe Name:</label><input type="text" id="rname" placeholder="'Homemade Chili'" class="required" />
+				</div>
+				
+					<label for="dateadded">*Date:</label><input name="dateadded" type="date" data-role="datebox" id="dateadded" class="required" data-options='{"mode": "calbox"}'>
+				
+				<div data-role="fieldcontain">
+					<fieldset data-role="controlgroup">
+						<legend>*Recipe Category:</legend>
+						<input type="radio" value="Meat" id="meat" name="category" class="required"/><label for="meat">Meat</label>
+	    				<input type="radio" value="Pasta" id="pasta" name="category" /><label for="pasta">Pasta</label>
+	    				<input type="radio" value="Soup" id="soup" name="category" /><label for="soup">Soup</label>
+	    				<input type="radio" value="Dessert" id="dessert" name="category" /><label for="dessert">Dessert</label>
+					</fieldset>
+				</div>
+				
+				<div data-role="fieldcontain">
+					<label for="rtype">*Recipe Type:</label><input type="text" id="rtype" placeholder="Chicken, Beef, Chili, etc..." class="required" />
+				</div>
+				
+				<div data-role="fieldcontain">
+					<label for="ringredients">*Recipe Ingredients:</label><textarea name="ringredients" id="ringredients" placeholder="1 cup of water, 1 cup of milk, etc..." class="required" ></textarea>
+				</div>
+				
+				<div data-role="fieldcontain">
+					<label for="rdirections">Recipe Directions:</label><textarea name="rdirections" id="rdirections" placeholder="Preheat oven to 325, mix ingredients, etc..." class="required"></textarea>
+				</div>
+				
+				<div data-role="fieldcontain">
+					<input type="submit" value="Add My Recipe" data-theme="b"/><br/>
+					<input type="reset" value="Reset Form" data-theme="a" />
+				</div>
+				
+			</form>
+			<display id = "savedR">
+			</display>
+		</section>
+		<!--Footer Navigation Bar-->
+		<footer data-role="footer" data-position="fixed">
+			<div data-role="navbar">
+				<ul>
+					<li><a href="#home" data-icon="home">Home</a></li>
+					<li><a href="#error" data-icon="search">Find Recipes</a></li><!--Link to some type of API or feed in the future-->
+				</ul>
+			</div>
+		</footer>
+	</div>
+	
+	<!--Category Page (Thumbnail)-->
+	<div data-role="page" id="category" data-add-back-btn="true" data-position="fixed">
+	
+		<!--Page Header for Categories-->
+		<header data-role="header" data-theme="b">
+    		<h1>The Recipe Vault</h1>
+		</header>
+		
+		<section data-role="content" >
+		<h3>Browse Categories</h3>
+			<div class="ui-grid-solo">
+				<div class="ui-block-a">
+					<ul data-role="listview" data-inset="true">
+						<li data-role="list-divider">Meat</li>
+						<li><a href="#error">
+						<img src="chicken.jpg" height="50" width="50" />
+                        <h2> Chicken<p>Browse Chicken Recipes.</p></h2>
+                        </a></li>
+						<li><a href="#error">
+						<img src="beef.jpg" height="50" width="50" />
+                        <h2> Beef<p>It's What's For Dinner.</p></h2>
+                        </a></li>
+						<li><a href="#error">
+						<img src="pork.jpg" height="50" width="50" />
+                        <h2> Pork<p>The Other White Meat.</p></h2>
+                        </a></li>
+						<li><a href="#error">
+						<img src="fish.jpg" height="50" width="50" />
+                        <h2> Fish<p>Getting Fishy With It.</p></h2>
+                        </a></li>
+					</ul>
+				</div>
+				<div class="ui-block-a">
+					<ul data-role="listview" data-inset="true">
+						<li data-role="list-divider">Pasta</li>
+						<li><a href="#error">
+						<img src="spaghetti.jpg" height="50" width="50" />
+                        <h2> Spaghetti<p>Browse Spaghetti Recipes.</p></h2>
+                        </a></li>
+						<li><a href="#error">
+						<img src="lasagna.jpg" height="50" width="50" />
+                        <h2> Lasagna<p>Browse Lasagna Recipes..</p></h2>
+                        </a></li>
+						<li><a href="#error">
+						<img src="pastasalad.jpg" height="50" width="50" />
+                        <h2> Pasta Salad<p>Browse Pasta Salad Recipes.</p></h2>
+                        </a></li>
+						<li><a href="#error">
+						<img src="ravioli.jpg" height="50" width="50" />
+                        <h2> Ravioli<p>Browse Ravioli Recipes.</p></h2>
+                        </a></li>
+					</ul>
+				</div>
+				<div class="ui-block-a">
+					<ul data-role="listview" data-inset="true">
+						<li data-role="list-divider">Soup</li>
+						<li><a href="#error">
+						<img src="chili.jpg" height="50" width="50" />
+                        <h2> Chili<p>Browse Chili Recipes.</p></h2>
+                        </a></li>
+						<li><a href="#error">
+						<img src="chowder.jpg" height="50" width="50" />
+                        <h2> Chowder<p>Browse Chowder Recipes..</p></h2>
+                        </a></li>
+						<li><a href="#error">
+						<img src="stew.jpg" height="50" width="50" />
+                        <h2> Stew<p>Browse Stew Recipes.</p></h2>
+                        </a></li>
+						<li><a href="#error">
+						<img src="seafood.jpg" height="50" width="50" />
+                        <h2> Seafood<p>Browse Seafood Recipes.</p></h2>
+                        </a></li>
+					</ul>
+				</div>
+				<div class="ui-block-a">
+					<ul data-role="listview" data-inset="true">
+						<li data-role="list-divider">Dessert</li>
+						<li><a href="#error">
+						<img src="cake.jpg" height="50" width="50" />
+                        <h2> Cake<p>Browse Cake Recipes.</p></h2>
+                        </a></li>
+						<li><a href="#error">
+						<img src="cookies.jpg" height="50" width="50" />
+                        <h2> Cookies<p>Browse Cookies Recipes..</p></h2>
+                        </a></li>
+						<li><a href="#error">
+						<img src="pies.jpg" height="50" width="50" />
+                        <h2> Pies<p>Browse Pie Recipes.</p></h2>
+                        </a></li>
+						<li><a href="#error">
+						<img src="mousse.jpg" height="50" width="50" />
+                        <h2> Mousse<p>Browse Mousse Recipes.</p></h2>
+                        </a></li>
+					</ul>
+				</div>
+			</div>
+		</section>
+		
+		<!--Footer Navigation Bar-->
+		<footer data-role="footer" data-position="fixed">
+			<div data-role="navbar">
+				<ul>
+					<li><a href="#home" data-icon="home">Home</a></li>
+					<li><a href="#error" data-icon="search">Find Recipes</a></li><!--Link to some type of API or feed in the future-->
+				</ul>
+			</div>
+		</footer>
+	</div>
+	
+	<!--Recently Added (Newsfeed, Makeup for Project 2)-->
+	<div data-role="page" id="recentlyadded" data-add-back-btn="true" data-position="fixed">
+	
+		<!--Page Header for Recently Added-->
+		<header data-role="header" data-theme="b">
+    		<h1>The Recipe Vault</h1>
+		</header>
+		
+		<section data-role="content" >
+		<h3>Recently Added Recipes</h3>
+			<div class="ui-grid-solo">
+				<div class="ui-block-a">
+					<ul data-role="listview" data-inset="true">
+						<li data-role="list-divider">Recently Added</li>
+						<li><a href="#error">
+						<img src="chicken.jpg" height="50" width="50" />
+                        <h2> Chicken Parmesan<p>Added on 11/5/12.</p></h2>
+                        </a></li>
+						<li><a href="#error">
+						<img src="beef.jpg" height="50" width="50" />
+                        <h2> Beef Brisket<p>Added on 11/3/12.</p></h2>
+                        </a></li>
+						<li><a href="#error">
+						<img src="pork.jpg" height="50" width="50" />
+                        <h2> Pork Tenderloin<p>Added on 11/2/12.</p></h2>
+                        </a></li>
+						<li><a href="#error">
+						<img src="fish.jpg" height="50" width="50" />
+                        <h2> Blackened Mahi<p>Added on 11/1/12.</p></h2>
+                        </a></li>
+					</ul>
+				</div>
+			</div>
+		</section>
+		
+		<!--Footer Navigation Bar-->
+		<footer data-role="footer" data-position="fixed">
+			<div data-role="navbar">
+				<ul>
+					<li><a href="#home" data-icon="home">Home</a></li>
+					<li><a href="#error" data-icon="search">Find Recipes</a></li><!--Link to some type of API or feed in the future-->
+				</ul>
+			</div>
+		</footer>
+	</div>
+	
+	<!--Error Page-->
+	<div data-role="page" id="error" data-add-back-btn="true" data-filter="true">
+		<header data-role="header" data-theme="b" data-position="fixed">
+    		<h1>The Recipe Vault</h1>
+		</header>
+		
+		<section data-role="content">
+			<div id="feature1">
+		    	<a href="#additem" Data-ajax="false" ><img id ="feature" img src="addrecipe.png"/></a>
+		    </div><br/>
+		    <h2>This page is under construction</h2>
+		</section>
+	
+		<!--Footer Navigation Bar-->
+		<footer data-role="footer" data-position="fixed">
+			<div data-role="navbar">
+				<ul>
+					<li><a href="#home" data-icon="home">Home</a></li>
+					<li><a href="#error" data-icon="search">Find Recipes</a></li><!--Link to some type of API or feed in the future-->
+				</ul>
+			</div>
+		</footer>
+	</div>
+	
+	<!--JSON Data Page-->
+	<div data-role="page" id="ajaxjson" data-add-back-btn="true" data-filter="true">
+		<header data-role="header" data-theme="b" data-position="fixed">
+    		<h1>The Recipe Vault</h1>
+		</header>
+		
+		<section data-role="content">
+			<display id = "jsondata">
+			</display>
+		</section>
+	
+		<!--Footer Navigation Bar-->
+		<footer data-role="footer" data-position="fixed">
+			<div data-role="navbar">
+				<ul>
+					<li><a href="#home" data-icon="home">Home</a></li>
+					<li><a href="#error" data-icon="search">Find Recipes</a></li><!--Link to some type of API or feed in the future-->
+				</ul>
+			</div>
+		</footer>
+	</div>
+	<!--CSV  Data Page-->
+	<div data-role="page" id="ajaxcsv" data-add-back-btn="true" data-filter="true">
+		<header data-role="header" data-theme="b" data-position="fixed">
+    		<h1>The Recipe Vault</h1>
+		</header>
+		
+		<section data-role="content">
+			<display id = "csvdata">
+			</display>
+		</section>
+	
+		<!--Footer Navigation Bar-->
+		<footer data-role="footer" data-position="fixed">
+			<div data-role="navbar">
+				<ul>
+					<li><a href="#home" data-icon="home">Home</a></li>
+					<li><a href="#error" data-icon="search">Find Recipes</a></li><!--Link to some type of API or feed in the future-->
+				</ul>
+			</div>
+		</footer>
+	</div>
+	
+	<!--XML  Data Page-->
+	<div data-role="page" id="ajaxxml" data-add-back-btn="true" data-filter="true">
+		<header data-role="header" data-theme="b" data-position="fixed">
+    		<h1>The Recipe Vault</h1>
+		</header>
+		
+		<section data-role="content">
+			<display id = "xmldata">
+			</display>
+		</section>
+	
+		<!--Footer Navigation Bar-->
+		<footer data-role="footer" data-position="fixed">
+			<div data-role="navbar">
+				<ul>
+					<li><a href="#home" data-icon="home">Home</a></li>
+					<li><a href="#error" data-icon="search">Find Recipes</a></li><!--Link to some type of API or feed in the future-->
+				</ul>
+			</div>
+		</footer>
+	</div>
+	
+	<!--DataBase  Data Page-->
+	<div data-role="page" id="dbdata" data-add-back-btn="true" data-filter="true">
+		<header data-role="header" data-theme="b" data-position="fixed">
+    		<h1>The Recipe Vault</h1>
+		</header>
+		
+		<section data-role="content" class="ui-body-d" id = "couchdata">
+		</section>
+	
+		<!--Footer Navigation Bar-->
+		<footer data-role="footer" data-position="fixed">
+			<div data-role="navbar">
+				<ul>
+					<li><a href="#home" data-icon="home">Home</a></li>
+					<li><a href="#error" data-icon="search">Find Recipes</a></li><!--Link to some type of API or feed in the future-->
+				</ul>
+			</div>
+		</footer>
+	</div>
+
+	<!-- JavaScript -->	    
+	<script src="jquery-1.8.3.min.js"></script>
+	<script src="jquery.mobile-1.2.0.min.js"></script>
+	<script type="text/javascript" src="jquery.validate.min.js"></script>
+	<script type="text/javascript" src="json.js"></script>
+	<script type="text/javascript" src="main.js"></script>
+</body>
+</html>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ <recipes>
+    <recipe>
+        <rname>Chicken Parm</rname>
+        <dateadded>10/16/2012</dateadded>
+        <rating>5</rating>
+        <category>Meat</category>
+        <rtype>Chicken</rtype>
+        <ringredients>Chicken breast, Seasoning, Garlic</ringredients>
+        <rdirections>Preheat oven to 425. Rub chicken with seasoning and garlic. Place in oven</rdirections>
+    </recipe>
+    <recipe>
+        <rname>Best Ravioli</rname>
+        <dateadded>10/15/2012</dateadded>
+        <rating>4</rating>
+        <category>Pasta</category>
+        <rtype>Ravioli</rtype>
+        <ringredients>Raviolis, Red Sauce</ringredients>
+        <rdirections>Bake ravioli at temp. Add sauce and continue baking.</rdirections>
+    </recipe>
+    <recipe>
+        <rname>Homemade Chili</rname>
+        <dateadded>10/14/2012</dateadded>
+        <rating>3</rating>
+        <category>Soup</category>
+        <rtype>Chili</rtype>
+        <ringredients>Beef, Beans, Onions, Peppers, Chili Powder</ringredients>
+        <rdirections>Brown meat in pan. Mix other ingredients into pot, add water. Combine all ingredients, bring to boil. Reduce heat and simmer for 3 hours.</rdirections>
+    </recipe>
+    <recipe>
+        <rname>Chicken Parm</rname>
+        <dateadded>10/16/2012</dateadded>
+        <rating>5</rating>
+        <category>Meat</category>
+        <rtype>Chicken</rtype>
+        <ringredients>Chicken breast, Seasoning, Garlic</ringredients>
+        <rdirections>Preheat oven to 425. Rub chicken with seasoning and garlic. Place in oven</rdirections>
+    </recipe>
+    <recipe>
+        <rname>Best Ravioli</rname>
+        <dateadded>10/15/2012</dateadded>
+        <rating>4</rating>
+        <category>Pasta</category>
+        <rtype>Ravioli</rtype>
+        <ringredients>Raviolis, Red Sauce</ringredients>
+        <rdirections>Bake ravioli at temp. Add sauce and continue baking.</rdirections>
+    </recipe>
+</recipes>
