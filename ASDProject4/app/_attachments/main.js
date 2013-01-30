@@ -27,33 +27,11 @@ $('#home').on('pageinit', function(){
 		});
 	});
 	$('#dbRec').on('click', function(){
-		$.ajax({
-			url: '_view/recipes',
-			type: 'GET',
-			dataType: 'json',
-			success:function(data){
-				$.each(data.rows, function(index, recipe){
-					var name = recipe.value.Name;
-					var date = recipe.value.Date;
-					var rating = recipe.value.Rating;
-					var category = recipe.value.Category;
-					var type = recipe.value.Type;
-					var ingredients = recipe.value.Ingredients;
-					var directions = recipe.value.Direction;
-					$('#couchdata').append(
-						$('<ul>' + 
-						'<li>' + "Name:" + ' ' + name + '</li>' +
-						'<li>' + "Date:" + ' ' + date + '</li>' +
-						'<li>' + "Rating:" + ' ' + rating + '</li>' +
-						'<li>' + "Category:" + ' ' + category + '</li>' +
-						'<li>' + "Type:" + ' ' + type + '</li>' +
-						'<li>' + "Ingredients:" + ' ' + ingredients + '</li>' +
-						'<li>' + "Directions:" + ' ' + directions + '</li>' + 
-						'</ul>' + '<br />')
-					);
-				});
+		$.couch.db("asdproject4").view("recipevault/recipes", {
+			success: function(data){
+				console.log(data);
 			}
-		});
+		})
 	});
 	$('#csvRec').on('click', function(){
 		$.ajax({
@@ -264,4 +242,33 @@ $('#additem').on('pageinit', function() {
     $('#addNew').click(function() {
         location.reload();
     });
+});
+$('#recentlyadded').on('pageinit', function(){
+	$.couch.db("asdproject4").view("recipevault/recipes", {
+		success: function(data){
+			console.log(data);
+			$('#recentrecipes').empty();
+			$.each(data.rows, function(index, recipe){
+				var name = recipe.value.name;
+					var date = recipe.value.date;
+					var rating = recipe.value.rating;
+					var category = recipe.value.category;
+					var type = recipe.value.type;
+					var ingredients = recipe.value.ingredients;
+					var directions = recipe.value.direction;
+				$('#recentrecipes').append(
+					$('<li>' + 
+						"Name:" + ' ' + '<p>' + name + '</p>' +
+						"Date Added:" + ' ' + '<p>' + date + '</p>' +
+						"Rating:" + ' ' + '<p>' + rating + '</p>' +
+						"Category:" + ' ' + '<p>' + category + '</p>' +
+						"Type:" + ' ' + '<p>' + type + '</p>' +
+						"Ingredients:" + ' ' + '<p>' + ingredients + '</p>' +
+						"Directions:" + ' ' + '<p>' + directions + 
+					  '</li>' )
+				);
+			});
+			$('#recentrecipes').listview('refresh');
+		}
+	});
 });

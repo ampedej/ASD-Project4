@@ -68,3 +68,6 @@ textarea.ui-input-text { background: white; }
 label.error { display:block; margin:5px 0; color: #cc0000 }
 #rferrorslink { display: none; }
 
+li#recipeshome {
+	margin-top: 0px;
+}

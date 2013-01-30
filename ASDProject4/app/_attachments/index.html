@@ -39,15 +39,14 @@ ASD 1301
 		
 		<section data-role="content">
 		
-			<!--Add item feature call to action-->
+		<!--Add item feature call to action-->
 	    	<div id="feature1">
 		    	<a href="#additem" Data-ajax="false" ><img id ="feature" img src="addrecipe.png" /></a>
 		    </div><br/>
 		    
-		    <!--Listview browse recipes-->
 		    <ul data-role="listview">  
 		    	<li data-role="list-divider">Browse Recipes</li>
-		    		<li><a href= "#category">
+		    		<li><a href= "#error">
 			    		<h2>By Category</h2>
 			    		<p>Browse Recipes By Category</p>
 			    	</a></li>
@@ -66,6 +65,30 @@ ASD 1301
 		    	<li><a href="#ajaxxml" data-role="button" id="xmlRec">View XML Data</a></li>
 		    	<li><a href="#dbdata" data-role="button" id="dbRec">View DataBase Recipes</a></li>
 		    </ul>
+		</section>
+			
+		<!--Footer Navigation Bar-->
+		<footer data-role="footer" data-position="fixed">
+			<div data-role="navbar">
+				<ul>
+					<li><a href="#home" data-icon="home">Home</a></li>
+					<li><a href="#error" data-icon="search">Find Recipes</a></li><!--Link to some type of API or feed in the future-->
+				</ul>
+			</div>
+		</footer>
+	</div>
+	
+	<!--Recently Added Page-->
+	<div data-role="page" id="recentlyadded" data-add-back-btn="true">
+	
+		<!--Page Header-->
+		<header data-role="header" data-theme="b" data-position="fixed">
+    		<h1>Recent Recipes</h1>
+		</header>
+		
+		<section data-role="content">
+		<ul id ="recentrecipes" data-role="listview">
+		</ul>
 		</section>
 			
 		<!--Footer Navigation Bar-->
@@ -136,161 +159,6 @@ ASD 1301
 			<display id = "savedR">
 			</display>
 		</section>
-		<!--Footer Navigation Bar-->
-		<footer data-role="footer" data-position="fixed">
-			<div data-role="navbar">
-				<ul>
-					<li><a href="#home" data-icon="home">Home</a></li>
-					<li><a href="#error" data-icon="search">Find Recipes</a></li><!--Link to some type of API or feed in the future-->
-				</ul>
-			</div>
-		</footer>
-	</div>
-	
-	<!--Category Page (Thumbnail)-->
-	<div data-role="page" id="category" data-add-back-btn="true" data-position="fixed">
-	
-		<!--Page Header for Categories-->
-		<header data-role="header" data-theme="b">
-    		<h1>The Recipe Vault</h1>
-		</header>
-		
-		<section data-role="content" >
-		<h3>Browse Categories</h3>
-			<div class="ui-grid-solo">
-				<div class="ui-block-a">
-					<ul data-role="listview" data-inset="true">
-						<li data-role="list-divider">Meat</li>
-						<li><a href="#error">
-						<img src="chicken.jpg" height="50" width="50" />
-                        <h2> Chicken<p>Browse Chicken Recipes.</p></h2>
-                        </a></li>
-						<li><a href="#error">
-						<img src="beef.jpg" height="50" width="50" />
-                        <h2> Beef<p>It's What's For Dinner.</p></h2>
-                        </a></li>
-						<li><a href="#error">
-						<img src="pork.jpg" height="50" width="50" />
-                        <h2> Pork<p>The Other White Meat.</p></h2>
-                        </a></li>
-						<li><a href="#error">
-						<img src="fish.jpg" height="50" width="50" />
-                        <h2> Fish<p>Getting Fishy With It.</p></h2>
-                        </a></li>
-					</ul>
-				</div>
-				<div class="ui-block-a">
-					<ul data-role="listview" data-inset="true">
-						<li data-role="list-divider">Pasta</li>
-						<li><a href="#error">
-						<img src="spaghetti.jpg" height="50" width="50" />
-                        <h2> Spaghetti<p>Browse Spaghetti Recipes.</p></h2>
-                        </a></li>
-						<li><a href="#error">
-						<img src="lasagna.jpg" height="50" width="50" />
-                        <h2> Lasagna<p>Browse Lasagna Recipes..</p></h2>
-                        </a></li>
-						<li><a href="#error">
-						<img src="pastasalad.jpg" height="50" width="50" />
-                        <h2> Pasta Salad<p>Browse Pasta Salad Recipes.</p></h2>
-                        </a></li>
-						<li><a href="#error">
-						<img src="ravioli.jpg" height="50" width="50" />
-                        <h2> Ravioli<p>Browse Ravioli Recipes.</p></h2>
-                        </a></li>
-					</ul>
-				</div>
-				<div class="ui-block-a">
-					<ul data-role="listview" data-inset="true">
-						<li data-role="list-divider">Soup</li>
-						<li><a href="#error">
-						<img src="chili.jpg" height="50" width="50" />
-                        <h2> Chili<p>Browse Chili Recipes.</p></h2>
-                        </a></li>
-						<li><a href="#error">
-						<img src="chowder.jpg" height="50" width="50" />
-                        <h2> Chowder<p>Browse Chowder Recipes..</p></h2>
-                        </a></li>
-						<li><a href="#error">
-						<img src="stew.jpg" height="50" width="50" />
-                        <h2> Stew<p>Browse Stew Recipes.</p></h2>
-                        </a></li>
-						<li><a href="#error">
-						<img src="seafood.jpg" height="50" width="50" />
-                        <h2> Seafood<p>Browse Seafood Recipes.</p></h2>
-                        </a></li>
-					</ul>
-				</div>
-				<div class="ui-block-a">
-					<ul data-role="listview" data-inset="true">
-						<li data-role="list-divider">Dessert</li>
-						<li><a href="#error">
-						<img src="cake.jpg" height="50" width="50" />
-                        <h2> Cake<p>Browse Cake Recipes.</p></h2>
-                        </a></li>
-						<li><a href="#error">
-						<img src="cookies.jpg" height="50" width="50" />
-                        <h2> Cookies<p>Browse Cookies Recipes..</p></h2>
-                        </a></li>
-						<li><a href="#error">
-						<img src="pies.jpg" height="50" width="50" />
-                        <h2> Pies<p>Browse Pie Recipes.</p></h2>
-                        </a></li>
-						<li><a href="#error">
-						<img src="mousse.jpg" height="50" width="50" />
-                        <h2> Mousse<p>Browse Mousse Recipes.</p></h2>
-                        </a></li>
-					</ul>
-				</div>
-			</div>
-		</section>
-		
-		<!--Footer Navigation Bar-->
-		<footer data-role="footer" data-position="fixed">
-			<div data-role="navbar">
-				<ul>
-					<li><a href="#home" data-icon="home">Home</a></li>
-					<li><a href="#error" data-icon="search">Find Recipes</a></li><!--Link to some type of API or feed in the future-->
-				</ul>
-			</div>
-		</footer>
-	</div>
-	
-	<!--Recently Added (Newsfeed, Makeup for Project 2)-->
-	<div data-role="page" id="recentlyadded" data-add-back-btn="true" data-position="fixed">
-	
-		<!--Page Header for Recently Added-->
-		<header data-role="header" data-theme="b">
-    		<h1>The Recipe Vault</h1>
-		</header>
-		
-		<section data-role="content" >
-		<h3>Recently Added Recipes</h3>
-			<div class="ui-grid-solo">
-				<div class="ui-block-a">
-					<ul data-role="listview" data-inset="true">
-						<li data-role="list-divider">Recently Added</li>
-						<li><a href="#error">
-						<img src="chicken.jpg" height="50" width="50" />
-                        <h2> Chicken Parmesan<p>Added on 11/5/12.</p></h2>
-                        </a></li>
-						<li><a href="#error">
-						<img src="beef.jpg" height="50" width="50" />
-                        <h2> Beef Brisket<p>Added on 11/3/12.</p></h2>
-                        </a></li>
-						<li><a href="#error">
-						<img src="pork.jpg" height="50" width="50" />
-                        <h2> Pork Tenderloin<p>Added on 11/2/12.</p></h2>
-                        </a></li>
-						<li><a href="#error">
-						<img src="fish.jpg" height="50" width="50" />
-                        <h2> Blackened Mahi<p>Added on 11/1/12.</p></h2>
-                        </a></li>
-					</ul>
-				</div>
-			</div>
-		</section>
-		
 		<!--Footer Navigation Bar-->
 		<footer data-role="footer" data-position="fixed">
 			<div data-role="navbar">
@@ -411,9 +279,10 @@ ASD 1301
 		</footer>
 	</div>
 
-	<!-- JavaScript -->	    
+	<!-- JavaScript -->
 	<script src="jquery-1.8.3.min.js"></script>
 	<script src="jquery.mobile-1.2.0.min.js"></script>
+	<script src="jquery.couch.js"></script>
 	<script type="text/javascript" src="jquery.validate.min.js"></script>
 	<script type="text/javascript" src="json.js"></script>
 	<script type="text/javascript" src="main.js"></script>
