@@ -81,13 +81,25 @@ $('#additem').on('pageinit', function() {
             storeData(data);
         }
     });
+    
+    //-----Get Radio Value---
+
+    function getSelectedRadio() {
+        var radios = document.forms[0].category;
+        for (var i = 0; i < radios.length; i++) {
+            if (radios[i].checked) {
+                categoryValue = radios[i].value;
+            }
+        }
+    }
 
     //---Save form---
 
     function storeData(key) {
+    	getSelectedRadio();
 	    var rname = $('#rname').val(),
 	    	date = $('#dateadded').val(),
-	    	category = $('#category').val(),
+	    	category = categoryValue,
 	    	rtype = $('#rtype').val(),
 	    	ringredients = $('#ringredients').val(),
 	    	rdirections = $('#rname').val();
@@ -190,12 +202,12 @@ $('#recentlyadded').on('pageinit', function(){
 			$('#recentrecipes').empty();
 			$.each(data.rows, function(index, recipe){
 				var name = recipe.value.name;
-					var date = recipe.value.date;
-					var rating = recipe.value.rating;
-					var category = recipe.value.category;
-					var type = recipe.value.type;
-					var ingredients = recipe.value.ingredients;
-					var directions = recipe.value.direction;
+				var date = recipe.value.date;
+				var rating = recipe.value.rating;
+				var category = recipe.value.category;
+				var type = recipe.value.type;
+				var ingredients = recipe.value.ingredients;
+				var directions = recipe.value.direction;
 				$('#recentrecipes').append(
 					$('<li>' + 
 						"Name:" + ' ' + '<p>' + name + '</p>' +
@@ -203,7 +215,7 @@ $('#recentlyadded').on('pageinit', function(){
 						"Category:" + ' ' + '<p>' + category + '</p>' +
 						"Type:" + ' ' + '<p>' + type + '</p>' +
 						"Ingredients:" + ' ' + '<p>' + ingredients + '</p>' +
-						"Directions:" + ' ' + '<p>' + directions + 
+						"Directions:" + ' ' + '<p>' + directions + '</p>' + 
 					  '</li>' )
 				);
 			});
