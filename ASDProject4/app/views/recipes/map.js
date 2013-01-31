@@ -3,7 +3,6 @@ function(doc) {
   	emit(doc._id.substr(7), {
   		"name": doc.rname,
   		"date": doc.date,
-  		"rating": doc.rating,
   		"category": doc.category,
   		"type": doc.rtype,
   		"ingredients": doc.ingredients,

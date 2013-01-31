@@ -81,86 +81,32 @@ $('#additem').on('pageinit', function() {
             storeData(data);
         }
     });
-    //-----Get Radio Value---
 
-    function getSelectedRadio() {
-        var radios = document.forms[0].category;
-        for (var i = 0; i < radios.length; i++) {
-            if (radios[i].checked) {
-                categoryValue = radios[i].value;
-            }
-        }
-    }
-    //---Toggle Controls----
-
-    function toggleControls(n) {
-        switch (n) {
-        case "on":
-            $('#recipeform').hide();
-            $('#clear').show();
-            $('#displayLink').hide();
-            $('#addNew').show();
-            break;
-        case "off":
-            $('#recipeForm').show();
-            $('#clear').show();
-            $('#displayLink').show();
-            $('#addNew').hide();
-            $('#items').hide();
-            break;
-        default:
-            return false;
-        }
-    }
     //---Save form---
 
     function storeData(key) {
-        var id = Math.floor(Math.random() * 100000001);
-        getSelectedRadio();
-        var item = {};
-        item.rname = ["Recipe Name:", $('#rname').val()];
-        item.dateadded = ["Date Added:", $('#dateadded').val()];
-        item.category = ["Category:", categoryValue];
-        item.rtype = ["Recipe Type:", $('#rtype').val()];
-        item.ringredients = ["Recipe Ingredients:", $('#ringredients').val()];
-        item.rdirections = ["Recipe Directions:", $('#rdirections').val()];
-        //Save into local storage
-        localStorage.setItem(id, JSON.stringify(item));
-        alert("Recipe Saved!");
-        $("#recipeform").resetForm();
-    }
-    //---Display Saved Data---
+	    var rname = $('#rname').val(),
+	    	date = $('#dateadded').val(),
+	    	category = $('#category').val(),
+	    	rtype = $('#rtype').val(),
+	    	ringredients = $('#ringredients').val(),
+	    	rdirections = $('#rname').val();
 
-    function getData() {
-        toggleControls("on");
-        if (localStorage.length === 0) {
-            alert("There are no recipes stored. Default recipes were added.");
-            autoFillData();
-        }
-        var makeDiv = $('<div>');
-        makeDiv.attr("id", "items");
-        var makeList = $('<ul>');
-        makeDiv.append(makeList);
-        $('#savedR').append(makeDiv);
-        $('#items').css('display', 'block');
-        for (var i = 0, length = localStorage.length; i < length; i++) {
-            var makeLi = $('<li>');
-            var linksLi = $('<li>');
-            makeList.append(makeLi);
-            var key = localStorage.key(i);
-            var value = localStorage.getItem(key);
-            var obj = jQuery.parseJSON(value);
-            var makeSubList = $('<ul>');
-            makeLi.append(makeSubList);
-            for (var n in obj) {
-                var makeSubLi = $('<li>');
-                makeSubList.append(makeSubLi);
-                var optSubText = obj[n][0] + " " + obj[n][1];
-                makeSubLi.text(optSubText);
-                makeSubList.append(linksLi);
-            }
-            makeItemLinks(localStorage.key(i), linksLi);
-        }
+        //Save into couch
+        $.couch.db("asdproject4").saveDoc({
+        	"_id": "recipe:" + rname,
+        	"rname": rname,
+        	"date": date,
+        	"category": category,
+        	"rtype": rtype,
+        	"ingredients": ringredients,
+        	"directions": rdirections
+        },{	
+        	success: function(data) {
+        		console.log(data);
+        		$.mobile.changePage($('#recentlyadded'),{transition:"fade"});
+             }
+         });
     }
     //---Create edit and delete item links---
 
@@ -233,15 +179,9 @@ $('#additem').on('pageinit', function() {
             localStorage.setItem(id, JSON.stringify(json[n]));
         }
     }
-    var displayLink = $('displayLink');
-    $('#displayLink').on("click", getData);
-    var clearLink = $('clear');
-    $('#clear').on("click", clearLocal);
     var save = $('submit');
     $('#submit').on("click", storeData);
-    $('#addNew').click(function() {
-        location.reload();
-    });
+
 });
 $('#recentlyadded').on('pageinit', function(){
 	$.couch.db("asdproject4").view("recipevault/recipes", {
@@ -260,7 +200,6 @@ $('#recentlyadded').on('pageinit', function(){
 					$('<li>' + 
 						"Name:" + ' ' + '<p>' + name + '</p>' +
 						"Date Added:" + ' ' + '<p>' + date + '</p>' +
-						"Rating:" + ' ' + '<p>' + rating + '</p>' +
 						"Category:" + ' ' + '<p>' + category + '</p>' +
 						"Type:" + ' ' + '<p>' + type + '</p>' +
 						"Ingredients:" + ' ' + '<p>' + ingredients + '</p>' +
