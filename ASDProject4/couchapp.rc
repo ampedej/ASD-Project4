@@ -4,7 +4,7 @@
       "db": "http://127.0.0.1:5984/asdproject4"
     },
     "cloudant": {
-      "db": "https://conscriatinkedinhaledget:GWyglGBQJ5iqyORQkaW3iajL@ampedej.cloudant.com/asdproject3"
+      "db": "https://ampedej:wyteboi3@ampedej.cloudant.com/asdproject4"
     }
   }
 }

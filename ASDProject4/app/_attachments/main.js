@@ -208,6 +208,10 @@ $('#recentlyadded').on('pageinit', function(){
 				var type = recipe.value.type;
 				var ingredients = recipe.value.ingredients;
 				var directions = recipe.value.direction;
+				var id = recipe.id;
+				var	rev = recipe.value.rev;
+				console.log(id);
+				console.log(rev);
 				$('#recentrecipes').append(
 					$('<li>' + 
 						"Name:" + ' ' + '<p>' + name + '</p>' +
@@ -216,10 +220,46 @@ $('#recentlyadded').on('pageinit', function(){
 						"Type:" + ' ' + '<p>' + type + '</p>' +
 						"Ingredients:" + ' ' + '<p>' + ingredients + '</p>' +
 						"Directions:" + ' ' + '<p>' + directions + '</p>' + 
-					  '</li>' )
+					  '</li>')
 				);
+				var deleteLink = $('<a>');
+				deleteLink.attr("href", "#");
+				var deleteText = "Delete This recipe";
+				deleteLink.on("click", deleteItem);
+				deleteLink.text(deleteText);
+				deleteLink.appendTo(recentrecipes);
+			function deleteItem() {
+			console.log(rev);
+				var ask = confirm("Are your sure you want to delete this recipe?");
+				if (ask) {
+					var doc = {
+						_id: id,
+						_rev: rev
+						};
+						$.couch.db("asdproject4").removeDoc(doc, {
+							success: function(data) {
+								console.log(data);
+								alert("Recipe was deleted!");
+								window.location.reload();
+							}
+						});
+				} else {
+					alert("Recipe was NOT deleted.");
+				}
+			}
 			});
 			$('#recentrecipes').listview('refresh');
 		}
 	});
+	/*var deleteLink = $('<a>');
+        deleteLink.attr("href", "#");
+        var deleteText = "Delete This recipe";
+        deleteLink.on("click", deleteItem);
+        deleteLink.text(deleteText);
+        deleteLink.appendTo(recentrecipes);*/
 });
+
+
+
+
+
