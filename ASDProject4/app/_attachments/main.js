@@ -120,77 +120,7 @@ $('#additem').on('pageinit', function() {
              }
          });
     }
-    //---Create edit and delete item links---
 
-    function makeItemLinks(key, linksLi) {
-        var editLink = $('<a>');
-        editLink.attr("href", "#");
-        editLink.attr("key", key);
-        var editText = "Edit Recipe";
-        editLink.on("click", editItem);
-        editLink.text(editText);
-        linksLi.append(editLink);
-        var breakTag = document.createElement('br');
-        linksLi.append(breakTag);
-        var deleteLink = $('<a>');
-        deleteLink.attr("href", "#");
-        deleteLink.attr("key", key);
-        var deleteText = "Delete This recipe";
-        deleteLink.on("click", deleteItem);
-        deleteLink.text(deleteText);
-        linksLi.append(deleteLink);
-    }
-    //---Edit item function. Can not get it to work---
-
-    function editItem() {
-        var value = localStorage.getItem($(this).attr("key"));
-        var item = jQuery.parseJSON(value);
-        toggleControls("off");
-        $('#displayLink').hide();
-        $('#rname').val(item.rname[1]);
-        $('#dateadded').val(item.dateadded[1]);
-        var radios = $('input[name="category"]:checked').val();
-        $('#rtype').val(item.rtype[1]);
-        $('#ringredients').val(item.ringredients)[1];
-        $('#rdirections').val(item.rdirections)[1];
-        save.off("click", storeData);
-        $('#submit').val("Edit Recipe");
-        var editSubmit = $('#submit');
-        editSubmit.on("click");
-        editSubmit.attr("key", this.key);
-    }
-    //---Delete item---
-
-    function deleteItem() {
-        var ask = confirm("Are your sure you want to delete this recipe?");
-        if (ask) {
-            localStorage.removeItem($(this).attr("key"));
-            alert("Recipe was deleted!");
-            window.location.reload();
-        } else {
-            alert("Recipe was NOT deleted.");
-        }
-    }
-    //---Clear all items in LocalStorage---
-
-    function clearLocal() {
-        if (localStorage.length === 0) {
-            alert("No recipes to clear.");
-        } else {
-            localStorage.clear();
-            alert("All recipes have been deleted!");
-            window.location.reload();
-            return false;
-        }
-    }
-    //---Auto populate JSON data in to local storage---
-
-    function autoFillData() {
-        for (var n in json) {
-            var id = Math.floor(Math.random() * 100000001);
-            localStorage.setItem(id, JSON.stringify(json[n]));
-        }
-    }
     var save = $('submit');
     $('#submit').on("click", storeData);
 
@@ -210,8 +140,6 @@ $('#recentlyadded').on('pageinit', function(){
 				var directions = recipe.value.direction;
 				var id = recipe.id;
 				var	rev = recipe.value.rev;
-				console.log(id);
-				console.log(rev);
 				$('#recentrecipes').append(
 					$('<li>' + 
 						"Name:" + ' ' + '<p>' + name + '</p>' +
@@ -222,6 +150,14 @@ $('#recentlyadded').on('pageinit', function(){
 						"Directions:" + ' ' + '<p>' + directions + '</p>' + 
 					  '</li>')
 				);
+				var editLink = $('<a>');
+				editLink.attr("href", "#");
+				var editText = "Edit recipe";
+				editLink.on("click", editItem);
+				editLink.text(editText);
+				editLink.appendTo(recentrecipes);
+				var breakTag = document.createElement('br');
+				editLink.append(breakTag);
 				var deleteLink = $('<a>');
 				deleteLink.attr("href", "#");
 				var deleteText = "Delete This recipe";
@@ -247,16 +183,20 @@ $('#recentlyadded').on('pageinit', function(){
 					alert("Recipe was NOT deleted.");
 				}
 			}
+			function editItem(recipe) {
+				$.mobile.changePage($('#additem'));
+				$('#rname').val(recipe.name[1]);
+				$('#dateadded').val(recipe.date[1]);
+				var radios = $('input[name="category"]:checked').val();
+				$('#rtype').val(recipe.type[1]);
+				$('#ringredients').val(recipe.ingredients)[1];
+				$('#rdirections').val(recipe.directions)[1];
+								
+			}
 			});
 			$('#recentrecipes').listview('refresh');
 		}
 	});
-	/*var deleteLink = $('<a>');
-        deleteLink.attr("href", "#");
-        var deleteText = "Delete This recipe";
-        deleteLink.on("click", deleteItem);
-        deleteLink.text(deleteText);
-        deleteLink.appendTo(recentrecipes);*/
 });
 
 
